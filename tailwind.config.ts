@@ -1,11 +1,11 @@
 // tailwind.config.js
-import {heroui} from "@heroui/react";
+import { heroui } from "@heroui/react"
 
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [
-    // ...
-    // make sure it's pointing to the ROOT node_module
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
@@ -15,4 +15,4 @@ const config = {
   plugins: [heroui()]
 }
 
-export default config;
+export default config
