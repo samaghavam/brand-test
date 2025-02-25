@@ -11,8 +11,8 @@ export function ThemeSwitch() {
     <Switch
       isSelected={isDarkMode}
       onValueChange={toggleTheme}
-      color="secondary"
-      size="lg"
+      color="default"
+      size="sm"
       thumbIcon={({ isSelected, className }) =>
         isSelected ? (
           <HiMoon className={className} />
@@ -20,7 +20,6 @@ export function ThemeSwitch() {
           <HiSun className={className} />
         )
       }
-    >
-    </Switch>
+    ></Switch>
   );
 }
