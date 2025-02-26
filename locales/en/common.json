@@ -20,5 +20,25 @@
   },
   "footer": {
     "language": "Language"
+  },
+  "profile": {
+    "card": {
+      "title": "Brand or Organization",
+      "description": "If your brand is established and you're looking for continuous support, get started now.",
+      "startButton": "Start",
+      "learnMore": "Learn more"
+    }
+  },
+  "step": {
+    "progress": "Step {{current}} of {{total}}",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "titles": {
+      "1": "Basic Information",
+      "2": "Brand Details",
+      "3": "Contact Information",
+      "4": "Review & Submit"
+    }
   }
 }

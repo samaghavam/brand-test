@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import fonts */
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap");
+@import url("https://cdn.fontcdn.ir/Font/Persian/Abar/Abar.css");
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-primary: "Heebo";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,8 +19,25 @@
   }
 }
 
+/* Base font styles */
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* LTR styles */
+[dir="ltr"] body {
+  font-family: var(--font-primary), Arial, sans-serif !important;
+}
+
+/* RTL styles */
+[dir="rtl"] body {
+  font-family: var(--font-primary), "Abar Low", Arial, sans-serif !important;
+}
+
+/* Override any other font-family declarations */
+*,
+*::before,
+*::after {
+  font-family: inherit;
 }

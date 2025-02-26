@@ -9,6 +9,7 @@ import {
   DropdownItem,
 } from "@heroui/react";
 import { HiTranslate } from "react-icons/hi";
+import { languageConfig } from "@/i18n/config";
 
 export function LanguageSwitcher() {
   const { t, i18n } = useTranslation();
@@ -19,8 +20,18 @@ export function LanguageSwitcher() {
   ];
 
   const handleLanguageChange = (lang: string) => {
+    const config = languageConfig[lang as keyof typeof languageConfig];
+
+    // Update document properties
+    document.documentElement.dir = config.dir;
+    document.documentElement.lang = lang;
+    document.documentElement.style.setProperty("--font-primary", config.font);
+
+    // Change language after DOM updates
     i18n.changeLanguage(lang);
-    document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
+
+    // Force a re-render by updating body class
+    document.body.className = document.body.className;
   };
 
   return (
