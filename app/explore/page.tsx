@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useBrandStore } from "@/store/useBrandStore";
 import { fetchBrands } from "@/utils/api";
 import { Skeleton } from "@heroui/react";
+import { BrandCard } from "@/components/shared/cards/BrandCard";
 
 export default function ExplorePage() {
   const searchParams = useSearchParams();
@@ -47,33 +48,7 @@ export default function ExplorePage() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {brands.map((brand) => (
-          <div
-            key={brand.brand_id}
-            className="p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow
-                     bg-neutral-white dark:bg-slate-700 
-                     border-neutral-light-3 dark:border-slate-600"
-          >
-            <h2 className="text-xl font-semibold text-slate-800 dark:text-neutral-white">
-              {brand.brand_name}
-            </h2>
-            {brand.brand_country && (
-              <p className="text-slate-600 dark:text-neutral-light-2">
-                {brand.brand_country}
-              </p>
-            )}
-            <div className="flex flex-wrap gap-2 mt-2">
-              {brand.brand_tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="px-2 py-1 text-sm rounded-full
-                           bg-neutral-light-3 dark:bg-slate-600
-                           text-slate-700 dark:text-neutral-light-2"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
+          <BrandCard key={brand.brand_id} brand={brand} />
         ))}
       </div>
       {brands.length === 0 && !isLoading && (
