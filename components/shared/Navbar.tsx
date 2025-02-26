@@ -16,13 +16,13 @@ import {
 import { ThemeSwitch } from "./theme/ThemeSwitch";
 import { SearchInput } from "./SearchInput";
 import Image from "next/image";
-
-
+import { useTranslation } from "react-i18next";
 
 export function MainNavbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const menuItems = [
     "Profile",
@@ -68,7 +68,7 @@ export function MainNavbar() {
                 : "text-slate-500 dark:text-neutral-light-2"
             }`}
           >
-            Home
+            {t("navbar.home")}
           </Link>
         </NavbarItem>
         <NavbarItem>
@@ -80,7 +80,7 @@ export function MainNavbar() {
                 : "text-slate-500 dark:text-neutral-light-2"
             }`}
           >
-            Explore
+            {t("navbar.explore")}
           </Link>
         </NavbarItem>
         <NavbarItem>
@@ -93,7 +93,7 @@ export function MainNavbar() {
                 : "text-slate-500 dark:text-neutral-light-2"
             }`}
           >
-            Integrations
+            {t("navbar.integrations")}
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -111,7 +111,7 @@ export function MainNavbar() {
             href="#"
             className="bg-indigo-500 text-neutral-white hover:bg-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-700"
           >
-            Sign Up
+            {t("navbar.signUp")}
           </Button>
         </NavbarItem>
       </NavbarContent>

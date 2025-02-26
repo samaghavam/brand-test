@@ -1,0 +1,24 @@
+{
+  "navbar": {
+    "home": "Home",
+    "explore": "Explore",
+    "integrations": "Integrations",
+    "search": "Search...",
+    "signUp": "Sign Up"
+  },
+  "search": {
+    "placeholder": "Type to search...",
+    "modalTitle": "Search",
+    "cancel": "Cancel",
+    "searchButton": "Search"
+  },
+  "explore": {
+    "title": "Explore Brands",
+    "searchResults": "Search Results for \"{{term}}\"",
+    "noBrands": "No brands found",
+    "noBrandsSearch": "No brands found for \"{{term}}\""
+  },
+  "footer": {
+    "language": "Language"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "navbar": {
+    "home": "خانه",
+    "explore": "جستجو",
+    "integrations": "ادغام‌ها",
+    "search": "جستجو...",
+    "signUp": "ثبت نام"
+  },
+  "search": {
+    "placeholder": "برای جستجو تایپ کنید...",
+    "modalTitle": "جستجو",
+    "cancel": "لغو",
+    "searchButton": "جستجو"
+  },
+  "explore": {
+    "title": "جستجوی برندها",
+    "searchResults": "نتایج جستجو برای \"{{term}}\"",
+    "noBrands": "برندی یافت نشد",
+    "noBrandsSearch": "برندی برای \"{{term}}\" یافت نشد"
+  },
+  "footer": {
+    "language": "زبان"
+  }
+}

@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { LanguageProvider } from "@/providers/LanguageProvider";
 import { MainNavbar } from "@/components/shared/Navbar";
+import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
+import "@/i18n/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,8 +33,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-white dark:bg-slate-500`}
       >
         <ThemeProvider>
-          <MainNavbar />
-          {children}
+          <LanguageProvider>
+            <MainNavbar />
+            {children}
+            <footer className="fixed bottom-4 right-4">
+              <LanguageSwitcher />
+            </footer>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
