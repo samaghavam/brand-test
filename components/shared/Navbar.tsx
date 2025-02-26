@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Navbar,
   NavbarBrand,
@@ -9,24 +11,18 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
   Button,
 } from "@heroui/react";
 import { ThemeSwitch } from "./theme/ThemeSwitch";
+import { SearchInput } from "./SearchInput";
+import Image from "next/image";
 
-const Logo = () => (
-  <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-    <path
-      clipRule="evenodd"
-      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-      fill="currentColor"
-      fillRule="evenodd"
-    />
-  </svg>
-);
+
 
 export function MainNavbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   const menuItems = [
     "Profile",
@@ -41,6 +37,11 @@ export function MainNavbar() {
     "Log Out",
   ];
 
+  const handleSearch = (term: string) => {
+    // Handle search logic here
+    router.push(`/search?q=${encodeURIComponent(term)}`);
+  };
+
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
@@ -52,10 +53,7 @@ export function MainNavbar() {
           className="sm:hidden text-slate-500 dark:text-neutral-white"
         />
         <NavbarBrand>
-          <Logo />
-          <p className="font-bold text-slate-500 dark:text-neutral-white">
-            ACME
-          </p>
+          <Image src="/logo.svg" alt="Logo" width={32} height={32} priority />
         </NavbarBrand>
       </NavbarContent>
 
@@ -63,26 +61,37 @@ export function MainNavbar() {
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
-            className="text-slate-500 dark:text-neutral-light-2"
+            href="/"
+            className={`${
+              pathname === "/"
+                ? "text-indigo-500 dark:text-indigo-300 font-extrabold"
+                : "text-slate-500 dark:text-neutral-light-2"
+            }`}
           >
-            Features
+            Home
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
+        <NavbarItem>
           <Link
-            aria-current="page"
-            href="#"
-            className="text-indigo-500 dark:text-indigo-300"
+            href="/explore"
+            className={`${
+              pathname === "/explore"
+                ? "text-indigo-500 dark:text-indigo-300 font-extrabold"
+                : "text-slate-500 dark:text-neutral-light-2"
+            }`}
           >
-            Customers
+            Explore
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link
             color="foreground"
-            href="#"
-            className="text-slate-500 dark:text-neutral-light-2"
+            href="/integrations"
+            className={`${
+              pathname === "/integrations"
+                ? "text-indigo-500 dark:text-indigo-300 font-extrabold"
+                : "text-slate-500 dark:text-neutral-light-2"
+            }`}
           >
             Integrations
           </Link>
@@ -90,13 +99,11 @@ export function MainNavbar() {
       </NavbarContent>
 
       <NavbarContent justify="end">
+        <NavbarItem className="hidden lg:flex">
+          <SearchInput onSearch={handleSearch} />
+        </NavbarItem>
         <NavbarItem>
           <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#" className="text-slate-500 dark:text-neutral-light-2">
-            Login
-          </Link>
         </NavbarItem>
         <NavbarItem>
           <Button
@@ -121,7 +128,6 @@ export function MainNavbar() {
                   : "text-slate-500 dark:text-neutral-light-2"
               }`}
               href="#"
-              size="lg"
             >
               {item}
             </Link>
