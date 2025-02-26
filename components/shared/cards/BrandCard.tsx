@@ -8,8 +8,8 @@ interface BrandCardProps {
 export function BrandCard({ brand }: BrandCardProps) {
   return (
     <Card
-      className="p-4 hover:shadow-md transition-shadow
-                bg-neutral-white dark:bg-slate-700 
+      className="p-4 hover:shadow-md transition-shadow relative
+                bg-gradient-to-b from-indigo-50/50 to-white dark:from-indigo-900/20 dark:to-slate-700
                 border-neutral-light-3 dark:border-slate-600"
       radius="lg"
     >
