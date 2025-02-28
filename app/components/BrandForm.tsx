@@ -9,9 +9,9 @@ import { useBrandFormStore } from "@/store/useBrandFormStore";
 import { brandFormSchema } from "../types/brand";
 import { BrandFormData } from "../types/brand";
 import { FiTrash2, FiPlus } from "react-icons/fi";
-  
+
 export function BrandForm({ stepNumber }: { stepNumber: number }) {
-  const { t } = useTranslation(["common"]);
+  const { t } = useTranslation("common");
   const router = useRouter();
   const { isSubmitting, error, setIsSubmitting, setError } =
     useBrandFormStore();
@@ -25,7 +25,6 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
     resolver: zodResolver(brandFormSchema),
     defaultValues: {
       brand_tags: [{ tag_name: "" }],
-      social_media: [{ name: "", link: "" }],
     },
   });
 
@@ -36,15 +35,6 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
   } = useFieldArray({
     control,
     name: "brand_tags",
-  });
-
-  const {
-    fields: socialFields,
-    append: appendSocial,
-    remove: removeSocial,
-  } = useFieldArray({
-    control,
-    name: "social_media",
   });
 
   const onSubmit = async (data: BrandFormData) => {
@@ -88,59 +78,91 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
       case 1:
         return (
           <div className="space-y-6">
+            <div>
+              <h1 className="text-4xl font-bold text-secondary">
+                {t("brand.title")}
+              </h1>
+              <h2 className="text-2xl font-semibold text-neutral-gray-1">
+                {t("brand.subtitle")}
+              </h2>
+              <p className="text-neutral-gray-4 text-lg">
+                {t("brand.description")}
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Brand Name</label>
-                <Input
-                  {...register("brand_name")}
-                  placeholder="Enter brand name"
-                  isInvalid={!!errors.brand_name}
-                  errorMessage={errors.brand_name?.message}
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-gray-2">
+                    {t("brand.fields.name.label")}
+                  </label>
+                  <Input
+                    {...register("brand_name")}
+                    placeholder={t("brand.fields.name.placeholder")}
+                    isInvalid={!!errors.brand_name}
+                    errorMessage={t(errors.brand_name?.message || "")}
+                    variant="bordered"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-neutral-gray-2">
+                    {t("brand.fields.image.label")}
+                  </label>
+                  <Input
+                    {...register("brand_image")}
+                    placeholder={t("brand.fields.image.placeholder")}
+                    isInvalid={!!errors.brand_image}
+                    errorMessage={t(errors.brand_image?.message || "")}
+                    variant="bordered"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Brand Logo URL</label>
-                <Input
-                  {...register("brand_image")}
-                  placeholder="Enter logo URL"
-                  isInvalid={!!errors.brand_image}
-                  errorMessage={errors.brand_image?.message}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">About Brand</label>
+                <label className="text-sm font-medium text-neutral-gray-2">
+                  {t("brand.fields.about.label")}
+                </label>
                 <Textarea
                   {...register("about_brand")}
-                  placeholder="Describe your brand"
+                  placeholder={t("brand.fields.about.placeholder")}
                   rows={4}
                   isInvalid={!!errors.about_brand}
-                  errorMessage={errors.about_brand?.message}
+                  errorMessage={t(errors.about_brand?.message || "")}
+                  variant="bordered"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Country</label>
+                <label className="text-sm font-medium">
+                  {t("brand.fields.country.label")}
+                </label>
                 <Input
                   {...register("brand_country")}
-                  placeholder="Enter country"
+                  placeholder={t("brand.fields.country.placeholder")}
                   isInvalid={!!errors.brand_country}
-                  errorMessage={errors.brand_country?.message}
+                  errorMessage={t(errors.brand_country?.message || "")}
+                  variant="bordered"
                 />
               </div>
 
               <div className="space-y-4">
-                <label className="text-sm font-medium">Brand Tags</label>
+                <label className="text-sm font-medium">
+                  {t("brand.fields.tags.label")}
+                </label>
+                <div className="text-xs text-gray-500">
+                  {t("brand.fields.tags.hint")}
+                </div>
                 {tagFields.map((field, index) => (
                   <div key={field.id} className="flex gap-2">
                     <Input
                       {...register(`brand_tags.${index}.tag_name`)}
-                      placeholder="Enter tag"
+                      placeholder={t("brand.fields.tags.placeholder")}
                       isInvalid={!!errors.brand_tags?.[index]?.tag_name}
-                      errorMessage={
-                        errors.brand_tags?.[index]?.tag_name?.message
-                      }
+                      errorMessage={t(
+                        errors.brand_tags?.[index]?.tag_name?.message || ""
+                      )}
+                      variant="bordered"
                     />
                     {index > 0 && (
                       <Button
@@ -162,57 +184,7 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
                     className="w-full"
                   >
                     <FiPlus className="h-4 w-4 mr-2" />
-                    Add Tag
-                  </Button>
-                )}
-              </div>
-
-              <div className="space-y-4">
-                <label className="text-sm font-medium">
-                  Social Media Links
-                </label>
-                {socialFields.map((field, index) => (
-                  <div
-                    key={field.id}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-2"
-                  >
-                    <Input
-                      {...register(`social_media.${index}.name`)}
-                      placeholder="Platform name"
-                      isInvalid={!!errors.social_media?.[index]?.name}
-                      errorMessage={errors.social_media?.[index]?.name?.message}
-                    />
-                    <div className="flex gap-2">
-                      <Input
-                        {...register(`social_media.${index}.link`)}
-                        placeholder="Profile URL"
-                        isInvalid={!!errors.social_media?.[index]?.link}
-                        errorMessage={
-                          errors.social_media?.[index]?.link?.message
-                        }
-                      />
-                      {index > 0 && (
-                        <Button
-                          type="button"
-                          onClick={() => removeSocial(index)}
-                          variant="flat"
-                          size="md"
-                        >
-                          <FiTrash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                {socialFields.length < 5 && (
-                  <Button
-                    type="button"
-                    onClick={() => appendSocial({ name: "", link: "" })}
-                    variant="flat"
-                    className="w-full"
-                  >
-                    <FiPlus className="h-4 w-4 mr-2" />
-                    Add Social Media
+                    {t("brand.fields.tags.addButton")}
                   </Button>
                 )}
               </div>
@@ -240,22 +212,22 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {renderStepFields()}
-      {error && <div className="text-red-500 text-sm">{error}</div>}
+      {error && <div className="text-status-error text-sm">{error}</div>}
       <div className="flex justify-between">
         {stepNumber > 1 && (
           <Button
             type="button"
             onClick={() => router.push(`/step/${stepNumber - 1}`)}
           >
-            Back
+            {t("brand.buttons.back")}
           </Button>
         )}
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting
-            ? "Loading..."
+            ? t("brand.buttons.loading")
             : stepNumber === 4
-            ? t("step.finish")
-            : t("step.next")}
+            ? t("brand.buttons.finish")
+            : t("brand.buttons.next")}
         </Button>
       </div>
     </form>

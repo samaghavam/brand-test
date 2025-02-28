@@ -40,5 +40,88 @@
       "3": "Contact Information",
       "4": "Review & Submit"
     }
+  },
+  "brand": {
+    "title": "Basic info",
+    "subtitle": "Tell about your Brand/organization",
+    "description": "Provide an overview of the brand or organization you want to register on 3F.",
+    "fields": {
+      "name": {
+        "label": "Brand/organisation name",
+        "placeholder": "Enter brand name",
+        "error": {
+          "required": "Brand name is required",
+          "minLength": "Brand name must be at least 2 characters",
+          "maxLength": "Brand name must be less than 50 characters"
+        }
+      },
+      "image": {
+        "label": "Brand Logo URL",
+        "placeholder": "Enter logo URL",
+        "error": {
+          "required": "Brand logo URL is required",
+          "invalid": "Please enter a valid URL"
+        }
+      },
+      "about": {
+        "label": "About Brand",
+        "placeholder": "Describe your brand",
+        "error": {
+          "required": "Brand description is required",
+          "minLength": "Description must be at least 10 characters",
+          "maxLength": "Description must be less than 500 characters"
+        }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Select country",
+        "error": {
+          "required": "Country is required"
+        }
+      },
+      "category": {
+        "label": "Category",
+        "placeholder": "Select primary category",
+        "description": "Select the primary category that best describes your brand or organization"
+      },
+      "subcategory": {
+        "label": "Subcategory",
+        "placeholder": "Select subcategory",
+        "description": "Then select the subcategory that further defines your brand or organization"
+      },
+      "tags": {
+        "label": "Brand tags",
+        "placeholder": "Type to add tags",
+        "hint": "by typing # make your own tag",
+        "addButton": "Add Tag",
+        "error": {
+          "required": "At least one tag is required",
+          "maxTags": "Maximum 5 tags allowed"
+        }
+      },
+      "social": {
+        "label": "Social Media Links",
+        "platformPlaceholder": "Platform name",
+        "linkPlaceholder": "Profile URL",
+        "addButton": "Add Social Media",
+        "error": {
+          "required": "At least one social media link is required",
+          "maxLinks": "Maximum 5 social media links allowed",
+          "invalidUrl": "Please enter a valid URL"
+        }
+      }
+    },
+    "terms": {
+      "text": "I agree with the",
+      "link": "terms of service",
+      "of": "of 3F.",
+      "error": "You must agree to the terms of service"
+    },
+    "buttons": {
+      "back": "Back",
+      "next": "Next",
+      "finish": "Finish",
+      "loading": "Loading..."
+    }
   }
 }
