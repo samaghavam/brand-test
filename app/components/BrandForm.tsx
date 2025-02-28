@@ -3,12 +3,13 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { Button, Input, Textarea } from "@heroui/react";
+import { Button, Input } from "@heroui/react";
 import { useTranslation } from "react-i18next";
 import { useBrandFormStore } from "@/store/useBrandFormStore";
 import { brandFormSchema } from "../types/brand";
 import { BrandFormData } from "../types/brand";
 import { FiTrash2, FiPlus } from "react-icons/fi";
+import { FormField } from "@/app/components/shared/FormField";
 
 export function BrandForm({ stepNumber }: { stepNumber: number }) {
   const { t } = useTranslation("common");
@@ -78,7 +79,7 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
       case 1:
         return (
           <div className="space-y-6">
-            <div>
+            <div className="space-y-4">
               <h1 className="text-4xl font-bold text-secondary">
                 {t("brand.title")}
               </h1>
@@ -92,59 +93,39 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
 
             <div className="grid grid-cols-1 gap-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-gray-2">
-                    {t("brand.fields.name.label")}
-                  </label>
-                  <Input
-                    {...register("brand_name")}
-                    placeholder={t("brand.fields.name.placeholder")}
-                    isInvalid={!!errors.brand_name}
-                    errorMessage={t(errors.brand_name?.message || "")}
-                    variant="bordered"
-                  />
-                </div>
+                <FormField
+                  label={t("brand.fields.name.label")}
+                  name="brand_name"
+                  placeholder={t("brand.fields.name.placeholder")}
+                  register={register}
+                  error={t(errors.brand_name?.message || "")}
+                />
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-neutral-gray-2">
-                    {t("brand.fields.image.label")}
-                  </label>
-                  <Input
-                    {...register("brand_image")}
-                    placeholder={t("brand.fields.image.placeholder")}
-                    isInvalid={!!errors.brand_image}
-                    errorMessage={t(errors.brand_image?.message || "")}
-                    variant="bordered"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-neutral-gray-2">
-                  {t("brand.fields.about.label")}
-                </label>
-                <Textarea
-                  {...register("about_brand")}
-                  placeholder={t("brand.fields.about.placeholder")}
-                  rows={4}
-                  isInvalid={!!errors.about_brand}
-                  errorMessage={t(errors.about_brand?.message || "")}
-                  variant="bordered"
+                <FormField
+                  label={t("brand.fields.image.label")}
+                  name="brand_image"
+                  placeholder={t("brand.fields.image.placeholder")}
+                  register={register}
+                  error={t(errors.brand_image?.message || "")}
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">
-                  {t("brand.fields.country.label")}
-                </label>
-                <Input
-                  {...register("brand_country")}
-                  placeholder={t("brand.fields.country.placeholder")}
-                  isInvalid={!!errors.brand_country}
-                  errorMessage={t(errors.brand_country?.message || "")}
-                  variant="bordered"
-                />
-              </div>
+              <FormField
+                label={t("brand.fields.about.label")}
+                name="about_brand"
+                placeholder={t("brand.fields.about.placeholder")}
+                register={register}
+                error={t(errors.about_brand?.message || "")}
+                type="textarea"
+              />
+
+              <FormField
+                label={t("brand.fields.country.label")}
+                name="brand_country"
+                placeholder={t("brand.fields.country.placeholder")}
+                register={register}
+                error={t(errors.brand_country?.message || "")}
+              />
 
               <div className="space-y-4">
                 <label className="text-sm font-medium">
