@@ -110,22 +110,23 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
                 />
               </div>
 
-              <FormField
-                label={t("brand.fields.about.label")}
-                name="about_brand"
-                placeholder={t("brand.fields.about.placeholder")}
-                register={register}
-                error={t(errors.about_brand?.message || "")}
-                type="textarea"
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  label={t("brand.fields.country.label")}
+                  name="brand_country"
+                  placeholder={t("brand.fields.country.placeholder")}
+                  register={register}
+                  error={t(errors.brand_country?.message || "")}
+                />
 
-              <FormField
-                label={t("brand.fields.country.label")}
-                name="brand_country"
-                placeholder={t("brand.fields.country.placeholder")}
-                register={register}
-                error={t(errors.brand_country?.message || "")}
-              />
+                <FormField
+                  label={t("brand.fields.category.label")}
+                  name="brand_category"
+                  placeholder={t("brand.fields.category.placeholder")}
+                  register={register}
+                  error={t(errors.brand_category?.message || "")}
+                />
+              </div>
 
               <div className="space-y-4">
                 <label className="text-sm font-medium">
