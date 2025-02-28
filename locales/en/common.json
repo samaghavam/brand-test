@@ -76,13 +76,20 @@
         "label": "Country",
         "placeholder": "Select country",
         "error": {
-          "required": "Country is required"
+          "required": "Country is required",
+          "minLength": "Country name must be at least 3 characters",
+          "maxLength": "Country name must be less than 50 characters"
         }
       },
       "category": {
         "label": "Category",
         "placeholder": "Select primary category",
-        "description": "Select the primary category that best describes your brand or organization"
+        "description": "Select the primary category that best describes your brand or organization",
+        "error": {
+          "required": "Category is required",
+          "minLength": "Category name must be at least 3 characters",
+          "maxLength": "Category name must be less than 50 characters"
+        }
       },
       "subcategory": {
         "label": "Subcategory",

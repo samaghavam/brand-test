@@ -2,7 +2,6 @@
 
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { Button, Input } from "@heroui/react";
 import { useTranslation } from "react-i18next";
 import { useBrandFormStore } from "@/store/useBrandFormStore";
@@ -13,22 +12,20 @@ import { FormField } from "@/app/components/shared/FormField";
 
 export function BrandForm({ stepNumber }: { stepNumber: number }) {
   const { t } = useTranslation("common");
-  const router = useRouter();
-  const { isSubmitting, error, setIsSubmitting, setError } =
-    useBrandFormStore();
+  const { error } = useBrandFormStore();
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<BrandFormData>({
     resolver: zodResolver(brandFormSchema),
+    mode: "onChange",
     defaultValues: {
       brand_tags: [{ tag_name: "" }],
     },
   });
-
   const {
     fields: tagFields,
     append: appendTag,
@@ -38,38 +35,14 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
     name: "brand_tags",
   });
 
-  const onSubmit = async (data: BrandFormData) => {
-    setIsSubmitting(true);
-    setError(null);
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/brand`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            "Refresh-Token": localStorage.getItem("refreshToken") || "",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to submit brand data");
-      }
-
-      // Move to next step or finish
+  const onSubmit = (data: BrandFormData) => {
+    if (isValid) {
+      // Save form data to store
+      useBrandFormStore.setState((state) => ({ ...state, formData: data }));
+      // Move to next step
       if (stepNumber < 4) {
-        router.push(`/step/${stepNumber + 1}`);
-      } else {
-        router.push("/dashboard");
+        window.location.href = `/step/${stepNumber + 1}`;
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -77,9 +50,9 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
   const renderStepFields = () => {
     switch (stepNumber) {
       case 1:
-        return (
+        return (      
           <div className="space-y-6">
-            <div className="space-y-4">
+            <div>
               <h1 className="text-4xl font-bold text-secondary">
                 {t("brand.title")}
               </h1>
@@ -98,7 +71,11 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
                   name="brand_name"
                   placeholder={t("brand.fields.name.placeholder")}
                   register={register}
-                  error={t(errors.brand_name?.message || "")}
+                  error={
+                    errors.brand_name?.message
+                      ? t(errors.brand_name.message)
+                      : ""
+                  }
                 />
 
                 <FormField
@@ -106,7 +83,11 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
                   name="brand_image"
                   placeholder={t("brand.fields.image.placeholder")}
                   register={register}
-                  error={t(errors.brand_image?.message || "")}
+                  error={
+                    errors.brand_image?.message
+                      ? t(errors.brand_image.message)
+                      : ""
+                  }
                 />
               </div>
 
@@ -116,7 +97,11 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
                   name="brand_country"
                   placeholder={t("brand.fields.country.placeholder")}
                   register={register}
-                  error={t(errors.brand_country?.message || "")}
+                  error={
+                    errors.brand_country?.message
+                      ? t(errors.brand_country.message)
+                      : ""
+                  }
                 />
 
                 <FormField
@@ -124,7 +109,11 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
                   name="brand_category"
                   placeholder={t("brand.fields.category.placeholder")}
                   register={register}
-                  error={t(errors.brand_category?.message || "")}
+                  error={
+                    errors.brand_category?.message
+                      ? t(errors.brand_category.message)
+                      : ""
+                  }
                 />
               </div>
 
@@ -192,24 +181,16 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {renderStepFields()}
       {error && <div className="text-status-error text-sm">{error}</div>}
-      <div className="flex justify-between">
-        {stepNumber > 1 && (
-          <Button
-            type="button"
-            onClick={() => router.push(`/step/${stepNumber - 1}`)}
-          >
-            {t("brand.buttons.back")}
-          </Button>
-        )}
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting
-            ? t("brand.buttons.loading")
-            : stepNumber === 4
-            ? t("brand.buttons.finish")
-            : t("brand.buttons.next")}
+      <div className="flex justify-end space-x-4">
+        <Button
+          type="submit"
+          color="primary"
+          className="w-full md:w-auto"
+        >
+          {t("step.next")}
         </Button>
       </div>
     </form>
