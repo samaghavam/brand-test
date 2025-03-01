@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@heroui/react";
 import { useTranslation } from "react-i18next";
 import { useBrandFormStore } from "@/store/useBrandFormStore";
-import { brandFormSchema } from "../types/brand";
-import { BrandFormData } from "../types/brand";
+import { brandFormSchema } from "../../app/types/brand";
+import { BrandFormData } from "../../app/types/brand";
 import { FiTrash2, FiPlus } from "react-icons/fi";
-import { FormField } from "@/app/components/shared/FormField";
+import { FormField } from "@/components/shared/FormField";
 
 export function BrandForm({ stepNumber }: { stepNumber: number }) {
   const { t } = useTranslation("common");
@@ -50,7 +50,7 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
   const renderStepFields = () => {
     switch (stepNumber) {
       case 1:
-        return (      
+        return (
           <div className="space-y-6">
             <div>
               <h1 className="text-4xl font-bold text-secondary">
@@ -185,11 +185,7 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
       {renderStepFields()}
       {error && <div className="text-status-error text-sm">{error}</div>}
       <div className="flex justify-end space-x-4">
-        <Button
-          type="submit"
-          color="primary"
-          className="w-full md:w-auto"
-        >
+        <Button type="submit" color="primary" className="w-full md:w-auto">
           {t("step.next")}
         </Button>
       </div>

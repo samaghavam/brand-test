@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "https://fund-for-found.onrender.com";
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function GET() {
   try {

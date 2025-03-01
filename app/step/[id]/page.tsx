@@ -3,7 +3,7 @@
 import { StepLayout } from "@/components/shared/StepLayout";
 import { Suspense, use } from "react";
 import { ProfileCardSkeleton } from "@/components/shared/skeletons/ProfileCardSkeleton";
-import { BrandForm } from "@/app/components/BrandForm";
+import { BrandForm } from "@/components/shared/BrandForm";
 
 export default function StepPage({
   params,
