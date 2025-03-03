@@ -9,6 +9,7 @@ import { brandFormSchema } from "../../app/types/brand";
 import { BrandFormData } from "../../app/types/brand";
 import { FiTrash2, FiPlus } from "react-icons/fi";
 import { FormField } from "@/components/shared/FormField";
+import { createBrand } from "@/app/actions/brand";
 
 export function BrandForm({ stepNumber }: { stepNumber: number }) {
   const { t } = useTranslation("common");
@@ -35,13 +36,16 @@ export function BrandForm({ stepNumber }: { stepNumber: number }) {
     name: "brand_tags",
   });
 
-  const onSubmit = (data: BrandFormData) => {
+  const onSubmit = async (data: BrandFormData) => {
     if (isValid) {
-      // Save form data to store
-      useBrandFormStore.setState((state) => ({ ...state, formData: data }));
-      // Move to next step
-      if (stepNumber < 4) {
-        window.location.href = `/step/${stepNumber + 1}`;
+      try {
+        await createBrand(data);
+      } catch (error) {
+        useBrandFormStore.setState((state) => ({
+          ...state,
+          error:
+            error instanceof Error ? error.message : "Failed to create brand",
+        }));
       }
     }
   };

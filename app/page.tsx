@@ -1,6 +1,6 @@
 import { ProfileCard } from "@/components/shared/cards/ProfileCard";
 import { Suspense } from "react";
-import { ProfileCardSkeleton } from "@/components/shared/skeletons/ProfileCardSkeleton";
+import { ProfileCardSkeleton } from "@/components/skeletons/ProfileCardSkeleton";
 
 export default function Home() {
   return (

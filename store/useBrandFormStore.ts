@@ -1,17 +1,18 @@
 import { create } from "zustand";
+import { StepOneData, StepTwoData } from "@/app/brand/types";
 
 interface BrandFormStore {
-  isSubmitting: boolean;
-  error: string | null;
-  setIsSubmitting: (isSubmitting: boolean) => void;
-  setError: (error: string | null) => void;
-  resetState: () => void;
+  stepOneData: Partial<StepOneData>;
+  stepTwoData: Partial<StepTwoData>;
+  setStepOneData: (data: StepOneData) => void;
+  setStepTwoData: (data: StepTwoData) => void;
+  resetForm: () => void;
 }
 
 export const useBrandFormStore = create<BrandFormStore>((set) => ({
-  isSubmitting: false,
-  error: null,
-  setIsSubmitting: (isSubmitting) => set({ isSubmitting }),
-  setError: (error) => set({ error }),
-  resetState: () => set({ isSubmitting: false, error: null }),
+  stepOneData: {},
+  stepTwoData: {},
+  setStepOneData: (data) => set({ stepOneData: data }),
+  setStepTwoData: (data) => set({ stepTwoData: data }),
+  resetForm: () => set({ stepOneData: {}, stepTwoData: {} }),
 }));
