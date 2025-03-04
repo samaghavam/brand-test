@@ -2,6 +2,7 @@
 
 import { BrandFormData } from "./types";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function createBrand(formData: BrandFormData) {
   try {
@@ -47,7 +48,8 @@ export async function createBrand(formData: BrandFormData) {
       throw new Error(errorData.message || "Failed to create brand");
     }
 
-    return await response.json();
+    // Redirect to step 3 after successful brand creation
+    redirect("/step/3");
   } catch (error) {
     console.error("Error creating brand:", error);
     throw error;

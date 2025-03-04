@@ -71,7 +71,12 @@ export default function StepPage({
     if (stepNumber === 2 && Object.keys(stepOneData).length === 0) {
       router.push("/step/1");
     }
-  }, [stepNumber, stepOneData, router]);
+
+    // Redirect to step 1 if trying to access step 3 without completed form data
+    if (stepNumber === 3 && (Object.keys(stepOneData).length === 0 || Object.keys(stepTwoData).length === 0)) {
+      router.push("/step/1");
+    }
+  }, [stepNumber, stepOneData, stepTwoData, router]);
 
   return (
     <Suspense fallback={<ProfileCardSkeleton />}>
