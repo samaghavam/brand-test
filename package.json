@@ -11,8 +11,10 @@
   "dependencies": {
     "@heroui/react": "^2.7.2",
     "@hookform/resolvers": "^4.1.2",
+    "@types/js-cookie": "^3.0.6",
     "framer-motion": "^12.4.7",
     "i18next-browser-languagedetector": "^8.0.4",
+    "js-cookie": "^3.0.5",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

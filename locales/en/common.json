@@ -42,6 +42,12 @@
     }
   },
   "brand": {
+    "success": {
+      "title": "Brand Successfully Registered!",
+      "message": "Your brand has been successfully registered in our system.",
+      "registerAnother": "Register Another Brand",
+      "viewBrands": "View All Brands"
+    },
     "title": "Basic info",
     "subtitle": "Tell about your Brand/organization",
     "description": "Provide an overview of the brand or organization you want to register on 3F.",

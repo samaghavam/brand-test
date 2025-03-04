@@ -8,7 +8,7 @@ export function StepLayout({
   currentStep: number;
 }) {
   const { t } = useTranslation();
-  const totalSteps = 4;
+  const totalSteps = 3;
 
   return (
     <div className="container mx-auto px-4 py-8">

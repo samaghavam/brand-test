@@ -1,32 +1,55 @@
-'use server';
+"use server";
 
-import { BrandFormData } from './types';
+import { BrandFormData } from "./types";
+import { cookies } from "next/headers";
 
 export async function createBrand(formData: BrandFormData) {
   try {
-    // You would replace this with your actual API endpoint
+    // Try to use the external API if available
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    
-    const response = await fetch(`${baseUrl}/brand`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'sb-ginjmrvsyfbvxccpdqhq-auth-token.0': 'base64-eyJhY2Nlc3NfdG9rZW4iOiJleUpoYkdjaU9pSklVekkxTmlJc0ltdHBaQ0k2SWtOaWR6WkJkbkV5ZUVkaFNUVjJlWFlpTENKMGVYQWlPaUpLVjFRaWZRLmV5SnBjM01pT2lKb2RIUndjem92TDJkcGJtcHRjblp6ZVdaaWRuaGpZM0JrY1doeExuTjFjR0ZpWVhObExtTnZMMkYxZEdndmRqRWlMQ0p6ZFdJaU9pSXlNREl3TlRWbU9DMWlaRGRoTFRRM1lXRXRZV05pTkMwM05qWXhaamhsTnpRME1UWWlMQ0poZFdRaU9pSmhkWFJvWlc1MGFXTmhkR1ZrSWl3aVpYaHdJam94TnpReE1EQTJOREV3TENKcFlYUWlPakUzTkRFd01ESTRNVEFzSW1WdFlXbHNJam9pWW1GeVpHbGhZVGd6TUVCbmJXRnBiQzVqYjIwaUxDSndhRzl1WlNJNklpSXNJbUZ3Y0Y5dFpYUmhaR0YwWVNJNmV5SndjbTkyYVdSbGNpSTZJbWR2YjJkc1pTSXNJbkJ5YjNacFpHVnljeUk2V3lKbmIyOW5iR1VpWFgwc0luVnpaWEpmYldWMFlXUmhkR0VpT25zaVlYWmhkR0Z5WDNWeWJDSTZJbWgwZEhCek9pOHZiR2d6TG1kdmIyZHNaWFZ6WlhKamIyNTBaVzUwTG1OdmJTOWhMMEZEWnpodlkweEJTVTlrVVU5alZ6VkRPVFk1VkhaUVFYRnllVEJ0Yld0Q1FVUmpOSHBoYTJSVFpIQmFUazlHZUZOYU4wdE1hVTA5Y3prMkxXTWlMQ0psYldGcGJDSTZJbUpoY21ScFlXRTRNekJBWjIxaGFXd3VZMjl0SWl3aVpXMWhhV3hmZG1WeWFXWnBaV1FpT25SeWRXVXNJbVoxYkd4ZmJtRnRaU0k2SWtKaGNtUnBZU0JCYTJKaGNta2lMQ0pwYzNNaU9pSm9kSFJ3Y3pvdkwyRmpZMjkxYm5SekxtZHZiMmRzWlM1amIyMGlMQ0p1WVcxbElqb2lRbUZ5WkdsaElFRnJZbUZ5YVNJc0luQm9iMjVsWDNabGNtbG1hV1ZrSWpwbVlXeHpaU3dpY0dsamRIVnlaU0k2SW1oMGRIQnpPaTh2YkdnekxtZHZiMmRzWlhWelpYSmpiMjUwWlc1MExtTnZiUzloTDBGRFp6aHZZMHhCU1U5a1VVOWpWelZET1RZNVZIWlFRWEZ5ZVRCdGJXdENRVVJqTkhwaGEyUlRaSEJhVGs5R2VGTmFOMHRNYVUwOWN6azJMV01pTENKd2NtOTJhV1JsY2w5cFpDSTZJakV3TkRJMk1UQTRNVFF6TXpJd05UZzBOalE1TUNJc0luTjFZaUk2SWpFd05ESTJNVEE0TVRRek16SXdOVGcwTmpRNU1DSjlMQ0p5YjJ4bElqb2lZWFYwYUdWdWRHbGpZWFJsWkNJc0ltRmhiQ0k2SW1GaGJERWlMQ0poYlhJaU9sdDdJbTFsZEdodlpDSTZJbTloZFhSb0lpd2lkR2x0WlhOMFlXMXdJam94TnpReE1EQXlPREV3ZlYwc0luTmxjM05wYjI1ZmFXUWlPaUpqTkdVNE4yWTBaUzA0WTJVeUxUUXpNamd0WVRWa1pDMDRZVFptTm1OaVpqRXdNbU1pTENKcGMxOWhibTl1ZVcxdmRYTWlPbVpoYkhObGZRLmJZSnczUFBuLTlfOTNFRER0WkV2N0M3TkRtcUJONkVoeFFZRzR1NjFqeHMiLCJ0b2tlbl90eXBlIjoiYmVhcmVyIiwiZXhwaXJlc19pbiI6MzYwMCwiZXhwaXJlc19hdCI6MTc0MTAwNjQxMCwicmVmcmVzaF90b2tlbiI6IjgzdUU4UV94MmkyaHNMcTFPaWR0bnciLCJ1c2VyIjp7ImlkIjoiMjAyMDU1ZjgtYmQ3YS00N2FhLWFjYjQtNzY2MWY4ZTc0NDE2IiwiYXVkIjoiYXV0aGVudGljYXRlZCIsInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiZW1haWwiOiJiYXJkaWFhODMwQGdtYWlsLmNvbSIsImVtYWlsX2NvbmZpcm1lZF9hdCI6IjIwMjUtMDEtMTRUMTU6NTg6MTIuMTIwMTg0WiIsInBob25lIjoiIiwiY29uZmlybWVkX2F0IjoiMjAyNS0wMS0xNFQxNTo1ODoxMi4xMjAxODRaIiwibGFzdF9zaWduX2luX2F0IjoiMjAyNS0wMy0wM1QxMTo1MzozMC4wMzkxMDYxNTdaIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZ29vZ2xlIiwicHJvdmlkZXJzIjpbImdvb2dsZSJdfSwidXNlcl9tZXRhZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTEFJT2RRT2NXNUM5NjlUdlBBcXJ5MG1ta0JBRGM0emFrZFNkcFpOT0Z4U1o3S0xpTT1zOTYtYyIsImVtYWlsIjoiYmFyZGlhYTgzMEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZnVsbF9uYW1lIjoiQmFyZGlhIEFrYmFyaSIsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbSIsIm5hbWUiOiJCYXJkaWEgQWtiYXJpIiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTEFJT2RRT2NXNUM5NjlUdlBBcXJ5MG1ta0JBRGM0emFrZFNkcFpOT0Z4U1o3S0xpTT1zOTYtYyIsInByb3ZpZGVyX2lkIjoiMTA0MjYxMDgxNDMzMjA1ODQ2NDkwIiwic3ViIjoiMTA0MjYxMDgxNDMzMjA1ODQ2NDkwIn0sImlkZW50aXRpZXMiOlt7ImlkZW50aXR5X2lkIjoiMDZjN2I4YWEtYjExMS00OTFjLTg5Y2MtMWNlYzNkMmZmMmM4IiwiaWQiOiIxMDQyNjEwODE0MzMyMDU4NDY0OTAiLCJ1c2VyX2lkIjoiMjAyMDU1ZjgtYmQ3YS00N2FhLWFjYjQtN',
-        'sb-ginjmrvsyfbvxccpdqhq-auth-token.1':'zY2MWY4ZTc0NDE2IiwiaWRlbnRpdHlfZGF0YSI6eyJhdmF0YXJfdXJsIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTEFJT2RRT2NXNUM5NjlUdlBBcXJ5MG1ta0JBRGM0emFrZFNkcFpOT0Z4U1o3S0xpTT1zOTYtYyIsImVtYWlsIjoiYmFyZGlhYTgzMEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZnVsbF9uYW1lIjoiQmFyZGlhIEFrYmFyaSIsImlzcyI6Imh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbSIsIm5hbWUiOiJCYXJkaWEgQWtiYXJpIiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTEFJT2RRT2NXNUM5NjlUdlBBcXJ5MG1ta0JBRGM0emFrZFNkcFpOT0Z4U1o3S0xpTT1zOTYtYyIsInByb3ZpZGVyX2lkIjoiMTA0MjYxMDgxNDMzMjA1ODQ2NDkwIiwic3ViIjoiMTA0MjYxMDgxNDMzMjA1ODQ2NDkwIn0sInByb3ZpZGVyIjoiZ29vZ2xlIiwibGFzdF9zaWduX2luX2F0IjoiMjAyNS0wMS0xNFQxNTo1ODoxMi4xMTQ3ODNaIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDEtMTRUMTU6NTg6MTIuMTE0ODc5WiIsInVwZGF0ZWRfYXQiOiIyMDI1LTAzLTAzVDExOjUzOjI4LjIxOTU2NVoiLCJlbWFpbCI6ImJhcmRpYWE4MzBAZ21haWwuY29tIn1dLCJjcmVhdGVkX2F0IjoiMjAyNS0wMS0xNFQxNTo1ODoxMi4xMDk5MloiLCJ1cGRhdGVkX2F0IjoiMjAyNS0wMy0wM1QxMTo1MzozMC4wNzcwNDlaIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0sInByb3ZpZGVyX3Rva2VuIjoieWEyOS5hMEFlWFJQcDdqNmpKa2ZFQUFqTXpaRlI0Wng1ZkFEdnJrcDAxUzkwT0JrYW81cGNmRk9nMU12eG1MY2RXRHViWjBiT2tNVG5xS3VPR3pxNDdwUl9pVVlOV21mcjl0WUlEUFJ2a3ljUF82cjB2SVBCMWh1LTdwaXZrQTY2MVNpT0t0aGl5R1lvdnlqVFNKUG8zVTJBek1FbDZ2YVZENkFJQ0ZueWN2amRpZFVRYUNnWUtBZHNTQVJNU0ZRSEdYMk1pZ1RuZ0RlMnlfdlJ3cC1hRjNiRm05ZzAxNzcifQ'
-      },
-      body: JSON.stringify(formData),
-      cache: 'no-store',
-      credentials: "include"
-    });
+    let response;
+
+    // Check if we have auth tokens
+    const cookieStore = await cookies();
+    const authToken0 = cookieStore.get(
+      "sb-ginjmrvsyfbvxccpdqhq-auth-token.0"
+    )?.value;
+    const authToken1 = cookieStore.get(
+      "sb-ginjmrvsyfbvxccpdqhq-auth-token.1"
+    )?.value;
+
+    // If we have a base URL and auth tokens, use the external API
+    if (baseUrl && authToken0 && authToken1) {
+      response = await fetch(`${baseUrl}/brand`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "sb-ginjmrvsyfbvxccpdqhq-auth-token.0": authToken0,
+          "sb-ginjmrvsyfbvxccpdqhq-auth-token.1": authToken1,
+        },
+        body: JSON.stringify(formData),
+        cache: "no-store",
+        credentials: "include",
+      });
+    } else {
+      // Otherwise, use the local API endpoint
+      response = await fetch("/api/brands", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+    }
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to create brand');
+      throw new Error(errorData.message || "Failed to create brand");
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Error creating brand:', error);
+    console.error("Error creating brand:", error);
     throw error;
   }
 }

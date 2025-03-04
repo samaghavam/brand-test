@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useForm, Controller } from 'react-hook-form';
-import Input from '@/components/ui/input';
-import Button from '@/components/ui/button';
-import TagInput from '@/components/ui/tag-input';
-import { StepOneData } from '@/app/brand/types';
+import { useForm, Controller } from "react-hook-form";
+import Input from "@/components/shared/input";
+import Button from "@/components/shared/button";
+import TagInput from "@/components/shared/tag-input";
+import { StepOneData } from "@/app/brand/types";
 
 interface StepOneProps {
   initialData?: Partial<StepOneData>;
@@ -12,13 +12,17 @@ interface StepOneProps {
 }
 
 export default function StepOne({ initialData, onNext }: StepOneProps) {
-  const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<StepOneData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<StepOneData>({
     defaultValues: {
-      brand_name: initialData?.brand_name || '',
-      brand_country: initialData?.brand_country || '',
+      brand_name: initialData?.brand_name || "",
+      brand_country: initialData?.brand_country || "",
       brand_tags: initialData?.brand_tags || [],
-      brand_image: initialData?.brand_image || '',
-    }
+      brand_image: initialData?.brand_image || "",
+    },
   });
 
   const onSubmit = (data: StepOneData) => {
@@ -29,11 +33,11 @@ export default function StepOne({ initialData, onNext }: StepOneProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <h2 className="text-2xl font-bold">Brand Information</h2>
       <p className="text-gray-600">Step 1 of 2: Enter your brand details</p>
-      
+
       <Controller
         name="brand_name"
         control={control}
-        rules={{ required: 'Brand name is required' }}
+        rules={{ required: "Brand name is required" }}
         render={({ field }) => (
           <Input
             label="Brand Name"
@@ -43,11 +47,11 @@ export default function StepOne({ initialData, onNext }: StepOneProps) {
           />
         )}
       />
-      
+
       <Controller
         name="brand_country"
         control={control}
-        rules={{ required: 'Country is required' }}
+        rules={{ required: "Country is required" }}
         render={({ field }) => (
           <Input
             label="Country"
@@ -57,11 +61,11 @@ export default function StepOne({ initialData, onNext }: StepOneProps) {
           />
         )}
       />
-      
+
       <Controller
         name="brand_image"
         control={control}
-        rules={{ required: 'Brand image URL is required' }}
+        rules={{ required: "Brand image URL is required" }}
         render={({ field }) => (
           <Input
             label="Brand Image URL"
@@ -71,13 +75,14 @@ export default function StepOne({ initialData, onNext }: StepOneProps) {
           />
         )}
       />
-      
+
       <Controller
         name="brand_tags"
         control={control}
-        rules={{ 
-          required: 'At least one tag is required',
-          validate: (value) => value.length > 0 || 'At least one tag is required'
+        rules={{
+          required: "At least one tag is required",
+          validate: (value) =>
+            value.length > 0 || "At least one tag is required",
         }}
         render={({ field: { value, onChange } }) => (
           <TagInput
@@ -89,10 +94,10 @@ export default function StepOne({ initialData, onNext }: StepOneProps) {
           />
         )}
       />
-      
+
       <div className="flex justify-end">
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           isLoading={isSubmitting}
           className="min-w-[120px]"
         >
