@@ -1,26 +1,31 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { languageConfig } from "@/i18n/config";
+import { LanguageState, LanguageActions } from "@/app/types/store";
 
-type Language = "en" | "fa";
+export type Language = "en" | "fa";
+export type Direction = "ltr" | "rtl";
 
-interface LanguageStore {
-  currentLanguage: Language;
-  setLanguage: (lang: Language) => void;
-  getDirection: () => "ltr" | "rtl";
-  getFont: () => string;
-}
+type LanguageStore = LanguageState & LanguageActions;
+
+const initialState: LanguageState = {
+  currentLanguage: "en",
+};
 
 export const useLanguageStore = create<LanguageStore>()(
   persist(
     (set, get) => ({
-      currentLanguage: "en",
+      ...initialState,
       setLanguage: (lang) => set({ currentLanguage: lang }),
-      getDirection: () => languageConfig[get().currentLanguage].dir,
+      getDirection: () => languageConfig[get().currentLanguage].dir as Direction,
       getFont: () => languageConfig[get().currentLanguage].font,
     }),
     {
       name: "language-storage",
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        currentLanguage: state.currentLanguage,
+      }),
     }
   )
 );
